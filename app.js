@@ -39,8 +39,8 @@ addBtn.addEventListener("click", () => {
 
     todoContainer.appendChild(task)
 
-    // taskTitle.value = ""
-    // taskDesc.value = ""
+    taskTitle.value = ""
+    taskDesc.value = ""
 
     delBtn.addEventListener("click", () =>
     {
