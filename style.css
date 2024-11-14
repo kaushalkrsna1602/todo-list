@@ -1,0 +1,8 @@
+.rightDivStyle{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.taskColor{
+    background-color: #FADCD9;
+}
