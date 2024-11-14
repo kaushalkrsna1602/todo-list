@@ -33,6 +33,11 @@ addBtn.addEventListener("click", () => {
     delBtn.innerText = "Delete"
     delBtn.classList.add("btn", "btn-danger")
 
+    delBtn.addEventListener("click", () =>
+        {
+            todoContainer.removeChild(task)
+        })
+
     rightDiv.appendChild(delBtn)
 
     task.appendChild(rightDiv)
@@ -42,10 +47,6 @@ addBtn.addEventListener("click", () => {
     taskTitle.value = ""
     taskDesc.value = ""
 
-    delBtn.addEventListener("click", () =>
-    {
-        todoContainer.removeChild(task)
-    })
   });  
 
 
