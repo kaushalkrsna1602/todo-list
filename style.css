@@ -26,10 +26,16 @@ body {
     background-color: #FF6F61;
     color: white;
     border: none;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: 8px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
 }
 
 .btn-custom:hover {
-    background-color: #E55950;
+    background-color: #E94E38;
+    transform: scale(1.05);
 }
 
 .navbar-custom {
@@ -45,6 +51,11 @@ body {
     .task-container {
         padding: 0.5rem;
     }
+
+    .btn-custom {
+        font-size: 0.9rem;
+        padding: 10px 16px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -53,6 +64,6 @@ body {
     }
 
     .btn-custom {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 }
