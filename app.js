@@ -3,51 +3,77 @@ const taskTitle = document.getElementById("title");
 const taskDesc = document.getElementById("desc");
 const todoContainer = document.getElementById("todocontainer");
 
+// Load tasks from local storage on page load
+document.addEventListener("DOMContentLoaded", loadTasks);
 
-
+// Add task event
 addBtn.addEventListener("click", () => {
-    if(taskTitle.value == '' || taskDesc.value == '')
-    {
-        alert("Please Enter task title and description")
-        return
+    if (taskTitle.value.trim() === '' || taskDesc.value.trim() === '') {
+        alert("Please Enter task title and description");
+        return;
     }
 
-    let task = document.createElement("div")
-    task.classList.add("border", "p-3", "taskColor", "d-flex", "justify-content-between", "align-items-center", "rounded-4", "mt-3")
+    const taskData = {
+        title: taskTitle.value,
+        description: taskDesc.value
+    };
 
-    let leftDiv = document.createElement("div")
-    let rightDiv = document.createElement("div")
+    addTaskToDOM(taskData);
+    saveTaskToLocalStorage(taskData);
 
-    let theading = document.createElement("h3")
-    theading.innerText = taskTitle.value
+    taskTitle.value = "";
+    taskDesc.value = "";
+});
 
-    let tdesc = document.createElement("p")
-    tdesc.innerText = taskDesc.value
+// Function to add a task to the DOM
+function addTaskToDOM(taskData) {
+    let task = document.createElement("div");
+    task.classList.add("border", "p-3", "taskColor", "d-flex", "justify-content-between", "align-items-center", "rounded-4", "mt-3");
 
-    leftDiv.appendChild(theading)
-    leftDiv.appendChild(tdesc)
+    let leftDiv = document.createElement("div");
+    let rightDiv = document.createElement("div");
 
-    task.appendChild(leftDiv)
+    let theading = document.createElement("h3");
+    theading.innerText = taskData.title;
 
-    let delBtn = document.createElement("button")
-    delBtn.innerText = "Delete"
-    delBtn.classList.add("btn", "btn-danger")
+    let tdesc = document.createElement("p");
+    tdesc.innerText = taskData.description;
 
-    delBtn.addEventListener("click", () =>
-        {
-            todoContainer.removeChild(task)
-        })
+    leftDiv.appendChild(theading);
+    leftDiv.appendChild(tdesc);
 
-    rightDiv.appendChild(delBtn)
+    task.appendChild(leftDiv);
 
-    task.appendChild(rightDiv)
+    let delBtn = document.createElement("button");
+    delBtn.innerText = "Delete";
+    delBtn.classList.add("btn", "btn-danger");
 
-    todoContainer.appendChild(task)
+    delBtn.addEventListener("click", () => {
+        todoContainer.removeChild(task);
+        removeTaskFromLocalStorage(taskData);
+    });
 
-    taskTitle.value = ""
-    taskDesc.value = ""
+    rightDiv.appendChild(delBtn);
+    task.appendChild(rightDiv);
+    todoContainer.appendChild(task);
+}
 
-  });  
+// Function to save a task to local storage
+function saveTaskToLocalStorage(taskData) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push(taskData);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
+// Function to remove a task from local storage
+function removeTaskFromLocalStorage(taskData) {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks = tasks.filter(task => task.title !== taskData.title || task.description !== taskData.description);
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
-  
+// Function to load tasks from local storage
+function loadTasks() {
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.forEach(task => addTaskToDOM(task));
+}
